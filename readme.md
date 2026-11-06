@@ -1,4 +1,4 @@
-# Toko Buku Cendekia - UTS Pemrograman Web 1
+# Toko Buku Cendekia - UTS Pemrograman Web
 
 **NAMA :** RIZKI DWI ANANATA  
 **NIM :** 312510369  
