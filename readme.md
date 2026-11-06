@@ -8,7 +8,7 @@
 
 ---
 
-Aplikasi web sederhana untuk pemesanan buku secara online. Proyek ini dibuat untuk memenuhi tugas Ujian Tengah Semester (UTS) mata kuliah Pemrograman Web 1.
+Aplikasi web sederhana untuk pemesanan buku secara online. Proyek ini dibuat untuk memenuhi tugas Ujian Tengah Semester (UTS) mata kuliah Pemrograman Web.
 
 Aplikasi ini berfokus murni pada sisi *front-end* (HTML, CSS, dan Vanilla JavaScript) tanpa menggunakan *server* atau *database* (back-end). Semua data dummy (buku, user, dan tracking) disimpan dalam format Array JSON di dalam file JavaScript, dan simulasi penyimpanan data (seperti keranjang dan pesanan baru) menggunakan `localStorage` bawaan browser.
 
