@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id" data-tema="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Toko Buku Cendekia</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.dataset.tema = localStorage.getItem("tema") || "light";</script>
+</head>
+<body>
+
+  <!-- ================= TOPBAR ================= -->
+  <header class="topbar">
+    <div class="topbar__inner container">
+      <a class="brand" href="dashboard.html">
+        <span class="brand__logo" aria-hidden="true">📚</span>
+        <span class="brand__name">Cendekia<span>Books</span></span>
+      </a>
+
+      <nav class="topnav" aria-label="Navigasi utama">
+        <a href="dashboard.html" class="is-active">Dashboard</a>
+        <a href="stok.html">Stok</a>
+        <a href="checkout.html">Pemesanan</a>
+        <a href="tracking.html">Tracking</a>
+      </nav>
+
+      <div class="topbar__actions">
+        <button type="button" class="icon-btn" id="btnTema" aria-label="Ganti tema">🌙</button>
+        <div class="user-chip">
+          <span class="avatar" data-avatar>B</span>
+          <span class="user-chip__name" data-nama-user>Pengguna</span>
+        </div>
+        <button type="button" class="btn btn--outline btn--sm" id="btnLogout">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= KONTEN ================= -->
+  <main class="page-main container">
+
+    <!-- Greeting berdasarkan waktu lokal -->
+    <section class="greeting" aria-label="Sapaan">
+      <h1 id="greetingTeks">Selamat pagi 👋</h1>
+      <p id="greetingSub">Selamat datang kembali di Toko Buku Cendekia.</p>
+    </section>
+
+    <!-- Menu utama -->
+    <section aria-labelledby="judulMenu">
+      <h2 id="judulMenu" style="margin-bottom:1rem">Menu Utama</h2>
+      <div class="menu-grid">
+
+        <a class="menu-card" href="stok.html">
+          <div class="menu-card__icon" aria-hidden="true">📦</div>
+          <h3>Informasi Stok / Katalog</h3>
+          <p>Lihat daftar buku, harga, ketersediaan stok, dan tambahkan data buku baru.</p>
+        </a>
+
+        <a class="menu-card" href="tracking.html">
+          <div class="menu-card__icon" aria-hidden="true">🚚</div>
+          <h3>Tracking Pengiriman</h3>
+          <p>Lacak posisi paket berdasarkan nomor Delivery Order (DO).</p>
+        </a>
+
+        <button type="button" class="menu-card" data-open-modal="modalLaporan">
+          <div class="menu-card__icon" aria-hidden="true">📊</div>
+          <h3>Laporan Pemesanan</h3>
+          <p>Rekap seluruh pesanan beserta total pembayaran dan statusnya.</p>
+        </button>
+
+        <button type="button" class="menu-card" data-open-modal="modalRiwayat">
+          <div class="menu-card__icon" aria-hidden="true">🧾</div>
+          <h3>History Transaksi</h3>
+          <p>Riwayat transaksi yang pernah dilakukan beserta detail itemnya.</p>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- Ringkasan statistik -->
+    <section aria-labelledby="judulStat">
+      <h2 id="judulStat" style="margin-bottom:1rem">Ringkasan Hari Ini</h2>
+      <div class="stats-grid">
+        <div class="stat-card"><span>Total Judul Buku</span><strong id="statJudul">0</strong></div>
+        <div class="stat-card"><span>Total Stok</span><strong id="statStok">0</strong></div>
+        <div class="stat-card"><span>Stok Menipis (≤ 5)</span><strong id="statMenipis">0</strong></div>
+        <div class="stat-card"><span>Total Pesanan</span><strong id="statPesanan">0</strong></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= MODAL LAPORAN PEMESANAN ================= -->
+  <div class="modal" id="modalLaporan" aria-hidden="true">
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="judulLaporan" style="width:min(820px,100%)">
+      <header class="modal__head">
+        <h3 id="judulLaporan">Laporan Pemesanan</h3>
+        <button type="button" class="modal__close" data-close-modal aria-label="Tutup">×</button>
+      </header>
+      <div class="modal__body">
+        <div class="table-wrap">
+          <table>
+            <caption class="hidden">Rekap pesanan</caption>
+            <thead>
+              <tr>
+                <th scope="col">No. DO</th>
+                <th scope="col">Tanggal</th>
+                <th scope="col">Pemesan</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody id="isiLaporan"></tbody>
+          </table>
+        </div>
+        <p style="margin-top:1rem;text-align:right;font-weight:700">
+          Grand Total: <span id="grandTotalLaporan" style="color:var(--primary)">Rp 0</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL HISTORY TRANSAKSI ================= -->
+  <div class="modal" id="modalRiwayat" aria-hidden="true">
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="judulRiwayat" style="width:min(700px,100%)">
+      <header class="modal__head">
+        <h3 id="judulRiwayat">History Transaksi</h3>
+        <button type="button" class="modal__close" data-close-modal aria-label="Tutup">×</button>
+      </header>
+      <div class="modal__body" id="isiRiwayat"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

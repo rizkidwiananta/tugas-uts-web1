@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id" data-tema="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pemesanan — Toko Buku Cendekia</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.dataset.tema = localStorage.getItem("tema") || "light";</script>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar__inner container">
+      <a class="brand" href="dashboard.html">
+        <span class="brand__logo" aria-hidden="true">📚</span>
+        <span class="brand__name">Cendekia<span>Books</span></span>
+      </a>
+      <nav class="topnav" aria-label="Navigasi utama">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="stok.html">Stok</a>
+        <a href="checkout.html" class="is-active">Pemesanan</a>
+        <a href="tracking.html">Tracking</a>
+      </nav>
+      <div class="topbar__actions">
+        <button type="button" class="icon-btn" id="btnTema" aria-label="Ganti tema">🌙</button>
+        <div class="user-chip">
+          <span class="avatar" data-avatar>B</span>
+          <span class="user-chip__name" data-nama-user>Pengguna</span>
+        </div>
+        <button type="button" class="btn btn--outline btn--sm" id="btnLogout">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-main container">
+
+    <div class="page-head">
+      <div>
+        <h1>Halaman Pemesanan</h1>
+        <p>Tambahkan atau ubah data pemesanan, lalu lengkapi informasi pemesan dan pembayaran.</p>
+      </div>
+    </div>
+
+    <form id="formCheckout" novalidate>
+      <div class="checkout-grid">
+
+        <!-- ============ KOLOM KIRI ============ -->
+        <div class="checkout-col">
+
+          <!-- Data pemesanan -->
+          <section class="card" aria-labelledby="judulDataPesanan">
+            <div class="card__head">
+              <h2 id="judulDataPesanan">Data Pemesanan</h2>
+              <span class="badge badge--info" id="jumlahItem">0 item</span>
+            </div>
+            <div class="card__body" style="padding-bottom:.5rem">
+              <div class="toolbar" style="border:1px solid var(--border);border-radius:12px;padding:.75rem;margin-bottom:1rem;background:var(--surface-2)">
+                <select id="pilihBuku" aria-label="Pilih buku" style="flex:1 1 220px;padding:.58rem .85rem;border:1.5px solid var(--border);border-radius:10px;background:var(--surface)">
+                  <!-- diisi JS -->
+                </select>
+                <button type="button" class="btn btn--primary btn--sm" id="btnTambahItem">+ Tambah</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <caption class="hidden">Daftar buku yang dipesan</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Buku</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="tabelKeranjang"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Informasi pemesan -->
+          <section class="card" aria-labelledby="judulPemesan">
+            <div class="card__head"><h2 id="judulPemesan">Informasi Pemesan</h2></div>
+            <div class="card__body">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="namaPemesan">Nama Lengkap</label>
+                  <input type="text" id="namaPemesan" placeholder="Nama penerima paket">
+                  <small class="field__error" data-error-for="namaPemesan"></small>
+                </div>
+                <div class="field">
+                  <label for="teleponPemesan">No. Telepon</label>
+                  <input type="tel" id="teleponPemesan" placeholder="08xxxxxxxxxx">
+                  <small class="field__error" data-error-for="teleponPemesan"></small>
+                </div>
+                <div class="field field--full">
+                  <label for="emailPemesan">Email</label>
+                  <input type="email" id="emailPemesan" placeholder="nama@email.com">
+                  <small class="field__error" data-error-for="emailPemesan"></small>
+                </div>
+                <div class="field field--full">
+                  <label for="alamatPemesan">Alamat Lengkap Pengiriman</label>
+                  <textarea id="alamatPemesan" placeholder="Jalan, nomor rumah, kelurahan, kota, kode pos"></textarea>
+                  <small class="field__error" data-error-for="alamatPemesan"></small>
+                </div>
+                <div class="field field--full">
+                  <label for="catatanPemesan">Catatan (opsional)</label>
+                  <textarea id="catatanPemesan" placeholder="Contoh: titip di pos keamanan"></textarea>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Pembayaran -->
+          <section class="card" aria-labelledby="judulPembayaran">
+            <div class="card__head"><h2 id="judulPembayaran">Metode Pembayaran</h2></div>
+            <div class="card__body">
+              <div class="pay-method">
+                <label><input type="radio" name="metodeBayar" value="Transfer Bank"> Transfer Bank (BCA / Mandiri / BNI)</label>
+                <label><input type="radio" name="metodeBayar" value="E-Wallet"> E-Wallet (GoPay / OVO / Dana)</label>
+                <label><input type="radio" name="metodeBayar" value="COD"> COD — Bayar di Tempat</label>
+              </div>
+              <small class="field__error" data-error-for="metodeBayar" style="display:block"></small>
+              <p class="text-muted" style="font-size:.82rem;margin-top:.9rem" id="infoPembayaran">
+                Silakan pilih salah satu metode pembayaran.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <!-- ============ KOLOM KANAN: RINGKASAN ============ -->
+        <aside class="checkout-col" aria-label="Ringkasan pembayaran">
+          <div class="card summary">
+            <div class="card__head"><h2>Ringkasan Pesanan</h2></div>
+            <div class="card__body">
+              <div class="summary__row"><span>Subtotal</span><strong id="ringkasSubtotal">Rp 0</strong></div>
+              <div class="summary__row"><span>Ongkos Kirim</span><strong id="ringkasOngkir">Rp 0</strong></div>
+              <div class="summary__row"><span>Jumlah Item</span><strong id="ringkasItem">0</strong></div>
+              <div class="summary__total">
+                <span>Total Bayar</span>
+                <b id="ringkasTotal">Rp 0</b>
+              </div>
+              <button type="submit" class="btn btn--primary btn--block">Buat Pesanan</button>
+              <p class="text-muted" style="font-size:.78rem;text-align:center;margin-top:.8rem">
+                Gratis ongkir untuk pembelian di atas Rp 200.000.
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </form>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id" data-tema="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informasi Stok — Toko Buku Cendekia</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.dataset.tema = localStorage.getItem("tema") || "light";</script>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar__inner container">
+      <a class="brand" href="dashboard.html">
+        <span class="brand__logo" aria-hidden="true">📚</span>
+        <span class="brand__name">Cendekia<span>Books</span></span>
+      </a>
+      <nav class="topnav" aria-label="Navigasi utama">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="stok.html" class="is-active">Stok</a>
+        <a href="checkout.html">Pemesanan</a>
+        <a href="tracking.html">Tracking</a>
+      </nav>
+      <div class="topbar__actions">
+        <button type="button" class="icon-btn" id="btnTema" aria-label="Ganti tema">🌙</button>
+        <div class="user-chip">
+          <span class="avatar" data-avatar>B</span>
+          <span class="user-chip__name" data-nama-user>Pengguna</span>
+        </div>
+        <button type="button" class="btn btn--outline btn--sm" id="btnLogout">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-main container">
+
+    <div class="page-head">
+      <div>
+        <h1>Informasi Stok / Katalog Buku</h1>
+        <p>Data ditampilkan secara dinamis dari <code>data.js → dataKatalogBuku</code>.</p>
+      </div>
+      <button type="button" class="btn btn--primary" data-open-modal="modalTambahBuku">
+        + Tambah Buku
+      </button>
+    </div>
+
+    <!-- Ringkasan kecil -->
+    <div class="stats-grid" style="margin-bottom:1.25rem">
+      <div class="stat-card"><span>Total Judul</span><strong id="ringkasJudul">0</strong></div>
+      <div class="stat-card"><span>Total Stok</span><strong id="ringkasStok">0</strong></div>
+      <div class="stat-card"><span>Stok Menipis</span><strong id="ringkasMenipis">0</strong></div>
+    </div>
+
+    <section class="card" aria-labelledby="judulTabel">
+      <h2 id="judulTabel" class="hidden">Tabel Katalog Buku</h2>
+
+      <div class="toolbar">
+        <input type="search" id="cariBuku" placeholder="🔍 Cari nama atau kode buku...">
+        <select id="filterKategori" aria-label="Filter jenis buku">
+          <option value="">Semua Jenis</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <caption class="hidden">Daftar katalog buku beserta stok</caption>
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Buku</th>
+              <th scope="col">Jenis Buku</th>
+              <th scope="col">Harga</th>
+              <th scope="col">Stok</th>
+              <th scope="col">Status</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tabelKatalog">
+            <!-- diisi oleh JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= MODAL TAMBAH BUKU ================= -->
+  <div class="modal" id="modalTambahBuku" aria-hidden="true">
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="judulTambah">
+      <header class="modal__head">
+        <h3 id="judulTambah">Tambah Buku Baru</h3>
+        <button type="button" class="modal__close" data-close-modal aria-label="Tutup">×</button>
+      </header>
+      <div class="modal__body">
+        <form id="formTambahBuku" novalidate>
+          <div class="form-grid">
+            <div class="field field--full">
+              <label for="judulBaru">Nama Buku</label>
+              <input type="text" id="judulBaru" placeholder="Contoh: Bumi Manusia">
+              <small class="field__error" data-error-for="judulBaru"></small>
+            </div>
+            <div class="field">
+              <label for="jenisBarangBaru">Jenis Buku</label>
+              <select id="jenisBarangBaru">
+                <option value="">— Pilih —</option>
+                <option>Buku Ajar</option>
+                <option>Buku Referensi</option>
+                <option>Lainnya</option>
+              </select>
+              <small class="field__error" data-error-for="jenisBarangBaru"></small>
+            </div>
+            <div class="field">
+              <label for="edisiBaru">Edisi</label>
+              <input type="text" id="edisiBaru" placeholder="1">
+              <small class="field__error" data-error-for="edisiBaru"></small>
+            </div>
+            <div class="field">
+              <label for="hargaBaru">Harga (Rp)</label>
+              <input type="number" id="hargaBaru" min="1000" step="500" placeholder="85000">
+              <small class="field__error" data-error-for="hargaBaru"></small>
+            </div>
+            <div class="field">
+              <label for="stokBaru">Stok</label>
+              <input type="number" id="stokBaru" min="0" placeholder="10">
+              <small class="field__error" data-error-for="stokBaru"></small>
+            </div>
+            <div class="field field--full">
+              <label for="gambarBaru">Gambar Sampul (opsional)</label>
+              <input type="file" id="gambarBaru" accept="image/*">
+              <small class="field__hint">Pilih gambar dari perangkat (maksimal 5 MB). Jika kosong, sampul inisial akan dibuat otomatis.</small>
+              <small class="field__error" data-error-for="gambarBaru"></small>
+              <img id="pratinjauGambar" class="cover-preview" alt="Pratinjau sampul buku" hidden>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Simpan Buku</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/stok.js"></script>
+</body>
+</html>

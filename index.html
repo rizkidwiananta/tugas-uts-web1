@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id" data-tema="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Toko Buku Cendekia</title>
+  <meta name="description" content="Halaman login aplikasi pemesanan buku Toko Buku Cendekia">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // terapkan tema lebih awal agar tidak "berkedip"
+    document.documentElement.dataset.tema = localStorage.getItem("tema") || "light";
+  </script>
+</head>
+<body class="page-login">
+
+  <main class="login-wrap">
+
+    <!-- ===== Bagian kiri: branding ===== -->
+    <section class="login-hero" aria-label="Informasi aplikasi">
+      <a class="brand" href="index.html">
+        <span class="brand__logo" aria-hidden="true">📚</span>
+        <span class="brand__name">Toko Buku <span>Cendekia</span></span>
+      </a>
+
+      <h1>Baca hari ini,<br>kuasai dunia esok hari.</h1>
+      <p>Masuk untuk memesan buku favoritmu, memantau stok, dan melacak pengiriman dalam satu tempat.</p>
+
+      <ul class="login-hero__list">
+        <li>✓ Katalog buku lengkap &amp; stok real-time</li>
+        <li>✓ Pelacakan Delivery Order (DO)</li>
+        <li>✓ Riwayat transaksi yang rapi</li>
+      </ul>
+    </section>
+
+    <!-- ===== Bagian kanan: form login ===== -->
+    <section class="login-card" aria-label="Form login">
+      <header>
+        <h2>Masuk ke Akun</h2>
+        <p>Silakan isi email dan password Anda.</p>
+      </header>
+
+      <form id="formLogin" novalidate>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="nama@email.com" autocomplete="username">
+          <small class="field__error" data-error-for="email"></small>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="field__password">
+            <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password">
+            <button type="button" class="btn btn--link btn-toggle-pass" id="togglePass">Lihat</button>
+          </div>
+          <small class="field__error" data-error-for="password"></small>
+        </div>
+
+        <div class="login-actions">
+          <button type="button" class="btn btn--link" data-open-modal="modalLupa">Lupa Password?</button>
+          <button type="button" class="btn btn--link" data-open-modal="modalDaftar">Daftar</button>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block">Login</button>
+      </form>
+
+      <p class="login-hint">
+        Akun demo: <code>rina@gmail.com</code> / <code>rina123</code>
+      </p>
+    </section>
+  </main>
+
+  <!-- ================= MODAL LUPA PASSWORD ================= -->
+  <div class="modal" id="modalLupa" aria-hidden="true">
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="judulLupa">
+      <header class="modal__head">
+        <h3 id="judulLupa">Lupa Password</h3>
+        <button type="button" class="modal__close" data-close-modal aria-label="Tutup">×</button>
+      </header>
+      <div class="modal__body">
+        <p class="text-muted" style="margin-bottom:1rem;font-size:.9rem">
+          Masukkan email terdaftar. Kami akan mengirimkan tautan untuk mengatur ulang password Anda.
+        </p>
+        <form id="formLupa" novalidate>
+          <div class="field">
+            <label for="emailLupa">Email Terdaftar</label>
+            <input type="email" id="emailLupa" placeholder="nama@email.com">
+            <small class="field__error" data-error-for="emailLupa"></small>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Kirim Tautan Reset</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL DAFTAR ================= -->
+  <div class="modal" id="modalDaftar" aria-hidden="true">
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="judulDaftar">
+      <header class="modal__head">
+        <h3 id="judulDaftar">Daftar Akun Baru</h3>
+        <button type="button" class="modal__close" data-close-modal aria-label="Tutup">×</button>
+      </header>
+      <div class="modal__body">
+        <form id="formDaftar" novalidate>
+          <div class="field">
+            <label for="namaDaftar">Nama Lengkap</label>
+            <input type="text" id="namaDaftar" placeholder="Nama lengkap Anda">
+            <small class="field__error" data-error-for="namaDaftar"></small>
+          </div>
+          <div class="field">
+            <label for="emailDaftar">Email</label>
+            <input type="email" id="emailDaftar" placeholder="nama@email.com">
+            <small class="field__error" data-error-for="emailDaftar"></small>
+          </div>
+          <div class="field">
+            <label for="passDaftar">Password (min. 6 karakter)</label>
+            <input type="password" id="passDaftar" placeholder="••••••••">
+            <small class="field__error" data-error-for="passDaftar"></small>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Daftar Sekarang</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id" data-tema="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracking Pengiriman — Toko Buku Cendekia</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.dataset.tema = localStorage.getItem("tema") || "light";</script>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar__inner container">
+      <a class="brand" href="dashboard.html">
+        <span class="brand__logo" aria-hidden="true">📚</span>
+        <span class="brand__name">Cendekia<span>Books</span></span>
+      </a>
+      <nav class="topnav" aria-label="Navigasi utama">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="stok.html">Stok</a>
+        <a href="checkout.html">Pemesanan</a>
+        <a href="tracking.html" class="is-active">Tracking</a>
+      </nav>
+      <div class="topbar__actions">
+        <button type="button" class="icon-btn" id="btnTema" aria-label="Ganti tema">🌙</button>
+        <div class="user-chip">
+          <span class="avatar" data-avatar>B</span>
+          <span class="user-chip__name" data-nama-user>Pengguna</span>
+        </div>
+        <button type="button" class="btn btn--outline btn--sm" id="btnLogout">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-main container">
+
+    <div class="page-head" style="justify-content:center;text-align:center">
+      <div>
+        <h1>Tracking Pengiriman</h1>
+        <p>Masukkan nomor Delivery Order (DO) untuk melacak posisi paket Anda.</p>
+      </div>
+    </div>
+
+    <!-- Kotak pencarian -->
+    <section class="card search-card" aria-labelledby="judulCari">
+      <div class="card__body">
+        <h2 id="judulCari" style="font-size:1rem">Cari Paket</h2>
+        <form class="search-form" id="formTracking" novalidate>
+          <label for="inputDO" class="hidden">Nomor Delivery Order</label>
+          <input type="text" id="inputDO" placeholder="Contoh: 20230012" autocomplete="off">
+          <button type="submit" class="btn btn--primary">Cari</button>
+        </form>
+        <small class="field__error" data-error-for="inputDO" style="display:block;margin-top:.5rem"></small>
+
+        <div class="sample-do">
+          <span>Coba contoh:</span>
+          <button type="button" data-contoh="20230012">20230012</button>
+          <button type="button" data-contoh="20230013">20230013</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hasil pencarian -->
+    <section id="hasilTracking" class="hidden" aria-live="polite">
+      <div class="card">
+        <div class="card__body">
+
+          <div class="result-head">
+            <div>
+              <small>Nomor Delivery Order</small>
+              <h2 id="hasilNoDO">-</h2>
+              <small id="hasilTanggal">-</small>
+            </div>
+            <div style="text-align:right">
+              <span class="badge" id="hasilStatus">-</span>
+              <div style="font-weight:800;font-size:1.35rem;margin-top:.4rem;color:var(--primary)" id="hasilTotal">Rp 0</div>
+            </div>
+          </div>
+
+          <!-- Progress bar -->
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.82rem;font-weight:600;margin-bottom:.4rem">
+              <span class="text-muted">Progres Pengiriman</span>
+              <span id="hasilPersen">0%</span>
+            </div>
+            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressWrap">
+              <div class="progress__bar" id="progressBar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <!-- Stepper -->
+          <ol class="stepper" id="stepperTracking"></ol>
+
+          <!-- Detail pengiriman -->
+          <div class="detail-grid" style="border-top:1px solid var(--border);padding-top:1.2rem">
+            <div class="detail-item"><span>Nama Pemesan</span><strong id="detailNama">-</strong></div>
+            <div class="detail-item"><span>Ekspedisi</span><strong id="detailEkspedisi">-</strong></div>
+            <div class="detail-item"><span>Layanan</span><strong id="detailLayanan">-</strong></div>
+            <div class="detail-item"><span>Tanggal Kirim</span><strong id="detailTanggal">-</strong></div>
+            <div class="detail-item"><span>Jenis Paket</span><strong id="detailPaket">-</strong></div>
+            <div class="detail-item"><span>Total Pembayaran</span><strong id="detailTotal">-</strong></div>
+            <div class="detail-item" style="grid-column:1/-1"><span>Alamat Tujuan</span><strong id="detailAlamat">-</strong></div>
+          </div>
+
+          <!-- Riwayat perjalanan -->
+          <h3 style="margin-top:1.6rem">Riwayat Perjalanan Paket</h3>
+          <ul class="timeline" id="timelineTracking"></ul>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/tracking.js"></script>
+</body>
+</html>
